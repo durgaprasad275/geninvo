@@ -1,3 +1,4 @@
+import { StoreService } from './service/store.service';
 import { AuthGuard } from './service/auth.gaurd';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -36,7 +37,7 @@ import { StoreComponent } from './store/store.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, StoreService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

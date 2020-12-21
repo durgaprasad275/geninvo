@@ -2,7 +2,6 @@ import { TokenStorageService } from './../service/token-storage.service';
 import { AuthService } from './../service/auth.service';
 import { HeaderComponent } from './../header/header.component';
 import { FooterComponent } from './../footer/footer.component';
-import { LoginService } from './../service/login.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 @Component({

@@ -1,1 +1,64 @@
-<p>add works!</p>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-container">
+      <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate autocomplete="off">
+        <div class="form-group">
+          <label for="storename">Storename</label>
+          <input type="text" class="form-control" name="storename" [(ngModel)]="form.storename" required minlength="5"
+            maxlength="10" #storename="ngModel" />
+          <div class="alert-danger" *ngIf="storename.errors && f.submitted">
+            <div *ngIf="storename.errors.required">storename is required</div>
+            <div *ngIf="storename.errors.minlength">
+              storename must be at least 5 characters
+            </div>
+            <div *ngIf="storename.errors.maxlength">
+              storename must be at most 10 characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="category">Category</label>
+            <select class="form-control" name="category" [(ngModel)]="form.category" required
+             #storename="ngModel">
+              <option value="general">General</option>
+              <option value="mall">Mall</option>
+              <option value="shop">Shop</option>
+              <option value="medical">Medical</option>
+            </select>
+          <div class="alert-danger" *ngIf="storename.errors && f.submitted">
+            <div *ngIf="storename.errors.required">storename is required</div>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="longitude">longitude</label>
+          <input type="number" class="form-control" name="longitude" [(ngModel)]="form.longitude" required #longitude="ngModel" />
+          <div class="alert-danger" *ngIf="longitude.errors && f.submitted">
+            <div *ngIf="longitude.errors.required">longitude is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="latitude">Latitude</label>
+          <input type="number" class="form-control" name="latitude" [(ngModel)]="form.latitude" required
+            #latitude="ngModel" />
+          <div class="alert-danger" *ngIf="latitude.errors && f.submitted">
+            <div *ngIf="latitude.errors.required">latitude is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-primary btn-block">Login</button>
+        </div>
+      <div class="form-group">
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="f.submitted"
+        >
+          Store Add failed: {{ errorMessage }}
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
