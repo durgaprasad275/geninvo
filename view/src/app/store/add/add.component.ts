@@ -1,3 +1,4 @@
+import { StoreService } from './../../service/store.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,19 +8,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddComponent implements OnInit {
   form: any = {
-    username: null,
     storename: null,
     category: null,
     latitude: null,
     longitude: null
   };
   errorMessage = '';
-  constructor() { }
+  isAddStoreFailed = false;
+  constructor(private storeService: StoreService) { }
 
   ngOnInit(): void {
   }
   onSubmit(): void {
 
-    const { username, storename, category, latitude, longitude } = this.form;
+    const { storename, category, latitude, longitude } = this.form;
+
+    // this.()
+    this.storeService.add(storename, category, latitude, longitude).subscribe(
+      data => {
+        this.isAddStoreFailed = false;
+      },
+      err => {
+        this.isAddStoreFailed = true;
+        this.errorMessage = err.error.message;
+      }
+    );
   }
 }

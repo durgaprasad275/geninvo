@@ -1,9 +1,10 @@
+import { AuthInterceptor } from './service/auth.interceptor';
 import { StoreService } from './service/store.service';
 import { AuthGuard } from './service/auth.gaurd';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -37,7 +38,11 @@ import { StoreComponent } from './store/store.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [AuthGuard, StoreService],
+  providers: [AuthGuard, StoreService,{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,16 +1,22 @@
 package com.mystore.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="store")
-public class Store {
+public class Store implements Serializable{
 
 	
 	@Id
@@ -29,8 +35,9 @@ public class Store {
 	@Column(name="strctg")
 	private String category;
 
-	@ManyToOne
-	@JoinColumn(name="user_id",nullable=false)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(foreignKey = @ForeignKey(name = "user_id"), name = "user_id")
+	@JsonIgnore
 	private User user;
 	
 	public User getUser() {
@@ -80,4 +87,6 @@ public class Store {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+	
+	
 }

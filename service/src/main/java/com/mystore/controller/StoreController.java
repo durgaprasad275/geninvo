@@ -5,7 +5,12 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,21 +21,29 @@ import com.mystore.models.Store;
 import com.mystore.payload.request.StoreRequest;
 import com.mystore.services.StoreServiceImpl;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping(name = "store")
+@RequestMapping("/store")
 public class StoreController {
 
 	@Autowired
 	StoreServiceImpl storeService;
 
-	@GetMapping("{username}")
-	public List<Store> getStores(@RequestParam String username) {
-		return null;
-
+	@GetMapping("/fetch")
+	public List<Store> getStores(@RequestParam("user") String username) {
+		return storeService.getStore(username);
 	}
-	
-	@PostMapping(name = "add")
+
+	@DeleteMapping("/delStore")
+	public String deleteStore(@RequestParam String storeId) {
+		System.out.println("store id"+storeId);
+		storeService.deleteStore(Long.parseLong(storeId));
+		return "Store id: " + storeId + " deleted successfully..";//new ResponseEntity<>(storeId, HttpStatus.OK);//
+	}
+
+	@PostMapping("/add")
 	public String saveStore(@Valid @RequestBody StoreRequest storeRequest) {
+		System.out.println("store save");
 		storeService.saveStore(storeRequest);
 		return "Store added successfully..";
 

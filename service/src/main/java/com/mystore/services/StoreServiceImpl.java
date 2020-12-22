@@ -1,5 +1,7 @@
 package com.mystore.services;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,15 @@ public class StoreServiceImpl {
 	@Autowired
 	StoreRepository storeRepository;
 
+	public List<Store> getStore(String username){
+		User user = userRepository.findByUsername(username)
+				.orElseThrow(
+						() -> new UsernameNotFoundException(
+								"User Not Found with username: "
+										+ username)); 
+			return storeRepository.findAllByUserId(user.getId());
+	}
+	
 	@Transactional
 	public void saveStore(StoreRequest storeRequest) {
 		User user = userRepository.findByUsername(storeRequest.getUsername())
@@ -36,5 +47,9 @@ public class StoreServiceImpl {
 		store.setStoreLongitude(storeRequest.getLongitude());
 		storeRepository.save(store);
 
+	}
+	@Transactional
+	public void deleteStore(long id) {
+		storeRepository.deleteById(id);;
 	}
 }

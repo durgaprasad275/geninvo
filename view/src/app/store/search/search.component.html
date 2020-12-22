@@ -1,1 +1,38 @@
-<p>search works!</p>
+<table class="table">
+  <div *ngIf="!isStoreAvailable">No Store Data Available</div>
+  <div *ngIf="isStoreAvailable">
+    <thead>
+      <th>
+        Store Name
+      </th>
+      <th>
+        Category
+      </th>
+      <th>
+       Latitude
+      </th>
+      <th>
+        Longitude
+      </th>
+    </thead>
+    <tbody>
+      <tr *ngFor=" let store of storeList">
+        <td>
+          {{store.storeName }}
+        </td>
+        <td>
+          {{store.category }}
+        </td>
+        <td>
+          {{store.storeLatitude }}
+        </td>
+        <td>
+          {{store.storeLongitude }}
+        </td>
+        <td>
+          <button class="btn-danger" (click)="delete(store.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </div>
+</table>

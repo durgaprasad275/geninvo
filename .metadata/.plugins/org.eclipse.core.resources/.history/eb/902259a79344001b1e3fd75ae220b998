@@ -1,0 +1,17 @@
+package com.mystore.repository;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.mystore.models.Store;
+
+@Transactional
+public interface StoreRepository extends JpaRepository<Store, Long> {
+//	@Query("SELECT s FROM Store s WHERE s.status = :status and u.name = :name")
+	List<Store> findAllByUserId(long id);
+	
+}

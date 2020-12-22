@@ -6,7 +6,7 @@ import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http'
 
 import { Observable } from 'rxjs';
 
-const TOKEN_HEADER_KEY = 'Authorization';       // for Spring Boot back-end
+const TOKEN_HEADER_KEY = '';       // for Spring Boot back-end
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -16,7 +16,12 @@ export class AuthInterceptor implements HttpInterceptor {
     let authReq = req;
     const token = this.token.getToken();
     if (token != null) {
-      authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
+      authReq = req.clone({
+        // headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token)
+        setHeaders :{
+          'Authorization' : 'Bearer ' + token
+        }
+      });
     }
     return next.handle(authReq);
   }
